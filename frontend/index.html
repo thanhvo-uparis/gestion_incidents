@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestion Incidents Locatifs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Gestion des Tickets</h1>
+
+  <section>
+    <h2>Créer un ticket</h2>
+    <form id="ticketForm">
+      <input type="number" id="locataireId" placeholder="ID Locataire" required><br>
+      <input type="text" id="typeIncident" placeholder="Type d'incident (plomberie, électricité...)" required><br>
+      <textarea id="description" placeholder="Description de l'incident" required></textarea><br>
+      <button type="submit">Créer Ticket</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Liste des tickets</h2>
+    <ul id="ticketList"></ul>
+  </section>
+
+  <script src="httpRequest.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
