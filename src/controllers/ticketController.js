@@ -1,6 +1,7 @@
 const Ticket = require('../models/ticketModel');
 const Locataire = require('../models/locataireModel');
 const Artisan = require('../models/artisanModel');
+const axios = require("axios");
 
 const ticketController = {
   createTicket: async (req, res) => {
@@ -9,7 +10,25 @@ const ticketController = {
       if (!locataireId || !type_incident || !description) {
         return res.status(400).json({ error: 'Missing required fields' });
       }
+
+      // 1. Tạo ticket trong DB
       const ticket = await Ticket.create({ locataireId, type_incident, description });
+
+      // 2. Bắn webhook sang n8n
+      try {
+        await axios.post(process.env.N8N_WEBHOOK_URL || "http://localhost:5678/webhook-test/new-ticket", {
+          ticket_id: ticket.id,
+          locataire_id: locataireId,
+          type_incident,
+          description,
+          status: ticket.status
+        });
+        console.log(`✅ Webhook sent to n8n for ticket ${ticket.id}`);
+      } catch (err) {
+        console.error("⚠️ Failed to send webhook to n8n:", err.message);
+      }
+
+      // 3. Trả kết quả về client
       res.status(201).json(ticket);
     } catch (err) {
       console.error(err);

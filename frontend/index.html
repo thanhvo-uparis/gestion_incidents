@@ -12,16 +12,30 @@
     <h2>Créer un ticket</h2>
     <form id="ticketForm">
       <input type="number" id="locataireId" placeholder="ID Locataire" required><br>
-      <input type="text" id="typeIncident" placeholder="Type d'incident (plomberie, électricité...)" required><br>
-      <textarea id="description" placeholder="Description de l'incident" required></textarea><br>
-      <button type="submit">Créer Ticket</button>
+      <select id="typeIncident" required>
+        <option value="">Sélectionez le type d'incident</option>
+        <option value="plomberie">Plomberie</option>
+        <option value="électricité">Électricité</option>
+        <option value="chauffage">Chauffage</option>
+      </select>
+      <textarea id="description" placeholder="Description de l'incident"></textarea><br>
+      <button class="btn-ticket" type="button">Ajoutez des photos</button>
+      <button class="btn-ticket" type="submit">Créer Ticket</button>
     </form>
   </section>
-
+  <div style="height: 400px;"></div>
   <section>
     <h2>Liste des tickets</h2>
     <ul id="ticketList"></ul>
   </section>
+
+  <div id="ticketModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>Détails du ticket</h2>
+      <div id="modalBody"></div>
+    </div>
+  </div>
 
   <script src="httpRequest.js"></script>
   <script src="app.js"></script>
